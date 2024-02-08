@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&family=Kanit:wght@300&family=Nova+Square&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+body {
+    background-color: #3a3a3a;
+    
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    height: 130px;
+
+}
+
+header .img-logo {
+    margin: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+header .img-logo img {
+    object-fit: cover;
+    width: 250px;
+    height: 100px;
+}
+
+header .ls-button {
+    display: flex;
+    margin-top: 35px;
+    margin-right: 5rem;
+    width: 320px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+}
+
+header .ls-button .login-btn button {
+    width: 110px;
+    height: 55px;
+    border-radius: 13px;
+    font-weight: bold;
+    font-size: 20px;
+    border: solid 1px;
+    cursor: pointer;
+    background-color: aliceblue;
+
+    & a {
+        color: black;
+        text-decoration: none;
+    }
+}
+
+header .ls-button .login-btn button:hover {
+    width: 110px;
+    height: 55px;
+    border-radius: 13px;
+    font-weight: bold;
+    font-size: 20px;
+    border: solid 1px;
+    cursor: pointer;
+    transition: .2s;
+    background-color: #EB9D0B;
+
+    & a {
+        color: black;
+        text-decoration: none;
+    }
+}
+
+/*---------------------------------header-----------------------------------------*/
+/*---------------------------------header-----------------------------------------*/
+/*---------------------------------header-----------------------------------------*/
+/*---------------------------------header-----------------------------------------*/
+
+.list-weapon {
+
+    height: 120px;
+    width: 720px;
+    border-bottom:#ccc solid 1px ;
+
+    & ul {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        list-style: none;
+
+        & li {
+            display: flex;
+            align-items: end;
+            height: 120px;
+            padding-bottom: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 20px;
+
+        }
+    }
+}
+
+.list-weapon ul a{
+    text-decoration: none;
+    color: #fff;
+
+}
+
+.list-weapon-gun:hover {
+    border-bottom:#EB9D0B solid 5px ;
+    transition: .2s;
+    text-shadow: 0px 1px 16px rgba(255,255,255,0.9);
+}
+
+/*---------------------------------nav-----------------------------------------*/
+/*---------------------------------nav-----------------------------------------*/
+/*---------------------------------nav-----------------------------------------*/
+/*---------------------------------nav-----------------------------------------*/
+
+h1 {
+    color: #fff;
+    margin-top: 70px;
+    margin-left: 160px;
+    font-size: 45px;
+    font-weight: bold;
+    width: auto;
+    margin-bottom: 50px;
+}
+.info-item{
+    margin-top:2rem;
+    display: flex;
+    justify-content: center;
+    color:#fff; 
+
+        & p{
+            font-weight: 500;
+            font-size: 17px;
+        }
+}
+.container-content {
+    width: 1320px;
+    padding: 70px 0px;
+    margin: 5px auto;
+    display: grid;
+    gap: 3rem .5rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+.container-content .weapon-content {
+    padding: 10px;
+    margin: 10px;
+    width: 280px;
+    height: auto;
+    text-align: center;
+    &:hover img {
+        transform: translate(0, -45px);
+    }
+
+}
+
+.container-content .weapon-content .img-weapon-content {
+    background-color: #ccc;
+    border-radius: 10px 10px 0px 0px;
+
+    & img {
+        transition: .4s;
+        width: 180px;
+
+    }
+
+}
+
+.container-content .weapon-content .info-weapon-content {
+    background-color: #fff;
+    border-radius: 0px 0px 10px 10px;
+    height: 180px;
+
+    & h3 {
+        padding: 5px 0;
+        font-size: 18px;
+        font-weight: bold;
+        border-bottom: #000 solid 2px;
+    }
+}
+
+.container-content .weapon-content ul {
+    display: flex;
+    justify-content: space-between;
+    margin-top: .8rem;
+    padding: 0 1.3rem;
+    
+
+    & li {
+        list-style: none;
+        font-size: 14px;
+        
+    }
+}
+
+
+
+
+
+/*---------------------------------section-----------------------------------------*/
+/*---------------------------------section-----------------------------------------*/
+/*---------------------------------section-----------------------------------------*/
+/*---------------------------------section-----------------------------------------*/
+
+footer {
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100vw;
+}
+
+.footer-info p {
+    font-weight: 700;
+    font-size: 20px;
+}
