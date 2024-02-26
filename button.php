@@ -11,7 +11,7 @@ require_once 'config/db.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weapons-Gun</title>
-    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="button.css">
     <link rel="icon" href="public/img/logo.png " type="image/gif">
 
 </head>
@@ -71,10 +71,10 @@ require_once 'config/db.php';
                             <!-- แสดงชื่อผู้ใช้หรือผู้ดูแลระบบ -->
                             <button id="dropbtn" class="dropbtn"><?= $row['username']; ?></button>
                             <div id="dropdown-content" class="dropdown-content">
-                                <a href="profile/profile_info.php">Account Details</a>
-                                <a href="comment/Comment.php">Comment</a>
+                                <a href="#">Account Details</a>
+                                <a href="#">Comment</a>
                                 <?php if (isset($_SESSION['admin_id'])) { ?>
-                                    <a href="admin/admin.php">Admin Dashboard</a>
+                                    <a href="#">Admin Dashboard</a>
                                 <?php } ?>
                                 <a href="login/logout.php">Sign Out</a>
                             </div>
@@ -218,7 +218,6 @@ require_once 'config/db.php';
         dropbtn.addEventListener("click", function() {
             if (dropdownContent.style.display === "block") {
                 dropdownContent.style.display = "none";
-                console.log("TEST");
             } else {
                 dropdownContent.style.display = "block";
             }

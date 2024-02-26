@@ -14,21 +14,25 @@
         echo json_encode(array("status" => "error", "msg" => "Please remove spaces from the input fields"));
     } else if (!$firstname) {
         echo json_encode(array("status" => "error", "msg" => "Please enter your firstname"));
-    } elseif (!$lastname) {
+    } else if (!$lastname) {
         echo json_encode(array("status" => "error", "msg" => "Please enter your lastname"));
-    } elseif (!$email) {
+    } else if (!preg_match('/^[a-zA-Z]+$/', $firstname) || !preg_match('/^[a-zA-Z]+$/', $lastname)) {
+        echo json_encode(array("status" => "error", "msg" => "Please enter FirstName or LastName with A-Z or a-z only."));
+    } else if (!$email) {
         echo json_encode(array("status" => "error", "msg" => "Please enter your E-mail"));
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode(array("status" => "error", "msg" => "Please enter a valid email address"));
-    } elseif (!$username) {
+    } else if (!$username) {
         echo json_encode(array("status" => "error", "msg" => "Please enter your username"));
-    } elseif (!$password) {
+    } else if (!preg_match('/^[a-zA-Z0-9.]+$/', $username)) {
+        echo json_encode(array("status" => "error", "msg" => "Please enter Username A-Z, a-z, or 0-9 only."));
+    } else if (!$password) {
         echo json_encode(array("status" => "error", "msg" => "Please enter your password"));
-    } elseif (strlen($_POST['password']) < 8) {
+    } else if (strlen($_POST['password']) < 8) {
         echo json_encode(array("status" => "error", "msg" => "Please enter a password with more than 8 characters"));
-    } elseif (!$c_password) {
+    } else if (!$c_password) {
         echo json_encode(array("status" => "error", "msg" => "Please confirm your password"));
-    } elseif ($password != $c_password) {
+    } else if ($password != $c_password) {
         echo json_encode(array("status" => "error", "msg" => "Passwords don't match"));
     } else {
 

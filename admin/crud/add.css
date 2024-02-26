@@ -22,3 +22,55 @@ h1,label{
     color: aliceblue;
 }
 
+/* Style for the image container */
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style for the pop-up */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 30%; /* ลดขนาดรูปลงเหลือ 30% */
+    max-width: 700px;
+}
+
+.close {
+    background-color: #1E1E3F;
+    border-color: #1E1E3F;
+    color: #FFB60F;
+    text-shadow: 0px 0px 8px rgba(255, 182, 15, 1);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    font-size: 24px; /* ขนาดตัวอักษร */
+    border-radius: 25px; /* ทำให้มนเป็นรูปวงกลม */
+    width: 100px; /* ขนาดกว้าง */
+    height: 40px; /* ขนาดสูง */
+    line-height: 40px; /* การจัดตำแหน่งตามแนวดิ่ง */
+    text-align: center; /* จัดตำแหน่งตัวอักษรให้อยู่กึ่งกลาง */
+    position: absolute; /* การจัดตำแหน่งแบบอิสระ */
+    top: 70%; /* การจัดตำแหน่งด้านบน */
+    right: 35%; /* การจัดตำแหน่งด้านขวา */
+    cursor: pointer; /* การเปลี่ยนสีเมื่อมีการชี้ */
+    transition: background-color 0.3s; /* เพื่อให้มีการเปลี่ยนแปลงสีพื้นหลังอย่างนุ่มนวล */
+}
+
+.close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: #ccc;
+    color: #FFB60F;
+}
+

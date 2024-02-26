@@ -3,40 +3,6 @@
 session_start();
 require_once '../config/db.php';
 
-if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
-    if (isset($_POST['submit'])) {
-        $comment = $_POST['message']; // ดึงข้อมูลจาก textarea
-        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : $_SESSION['admin_id']; // ดึง user_id หรือ admin_id ขึ้นมา
-        $date = date("Y-m-d "); // วันที่ปัจจุบัน
-
-        if (empty($comment)) {
-            $_SESSION['warning'] = "Error adding comment.";
-            header("location: Comment.php");
-            exit;
-        } else {
-            // เพิ่มข้อมูลลงในฐานข้อมูล
-            $stmt = $conn->prepare("INSERT INTO table_comment (comment, date, userID) VALUES (:comment, :date, :userID)");
-            $stmt->bindParam(':comment', $comment);
-            $stmt->bindParam(':date', $date);
-            $stmt->bindParam(':userID', $userId);
-            $stmt->execute();
-
-            if ($stmt) {
-                $_SESSION['success'] = "Comment added successfully!";
-                header("location: Comment.php");
-                exit;
-            } else {
-                $_SESSION['error'] = "Error adding comment.";
-                header("location: Comment.php");
-                exit;
-            }
-        }
-    }
-} else {
-    header("location: ../index.php");
-    exit;
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -45,8 +11,9 @@ if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weapons-Gun</title>
-    <link rel="stylesheet" href="../public/css/Comment.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Account Details</title>
+    <link rel="stylesheet" href="profile_info.css">
     <link rel="icon" href="../public/img/logo.png " type="image/gif">
 </head>
 
@@ -131,51 +98,41 @@ if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
             <?php } ?>
         </div>
 
-
     </header>
 
-    <article>
-        <?php if (isset($_SESSION['success'])) { ?>
-            <?php
-            echo $_SESSION['success'];
-            unset($_SESSION['success']);
-            ?>
-        <?php } ?>
-        <?php if (isset($_SESSION['error'])) { ?>
-            <?php
-            echo $_SESSION['error'];
-            unset($_SESSION['error']);
-            ?>
-        <?php } ?>
-        <?php if (isset($_SESSION['warning'])) { ?>
-            <?php
-            echo $_SESSION['warning'];
-            unset($_SESSION['warning']);
-            ?>
-        <?php } ?>
+    <h1>Account Details</h1>
 
-        <div class="sec-com">
-            <div class="info-person">
-                <?php
-                if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
-                ?>
-                    <img class="img-person" src="../public/img/te.jpg" alt="">
-                    <p class="name-person"><?= $row['firstName']; ?> <?= $row['lastName']; ?></p>
-                <?php
-                }
-                ?>
-            </div>
-            <form method="post" action="">
-                <textarea class="comment-box" placeholder="แสดงความคิดเห็น..." cols="70" rows="8" name="message"></textarea>
-                <div class="bt-box">
-                    <button class="bt-submit" type="submit" name="submit">Submit</button>
+    <article>
+        <div class="container">
+            <div class="box">
+
+            <input type="hidden" readonly value="<?= $data['userID'] ?>" class="form-control" name="userID" require>
+                <div class="profile_info">
+                    <p>Firstname :</p>
+                    <p><?= $row['firstName'] ?></p>
                 </div>
-            </form>
+                <div class="profile_info">
+                    <p>Lastname :</p>
+                    <p><?= $row['lastName'] ?></p>
+                </div>
+                <div class="profile_info">
+                    <p>E-mail :</p>
+                    <p><?= $row['email'] ?></p>
+                </div>
+                <div class="profile_info">
+                    <p>Username :</p>
+                    <p><?= $row['username'] ?></p>
+                </div>
+                <div class="edit-profile">
+                    <a href="edit_profile.php?userID=<?= $row['userID']; ?>"><button type="button" class="btn btn-warning">Edit Profile</button></a>
+                </div>
+            </div>
         </div>
     </article>
 
     <footer-component></footer-component>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="../footer/footer.js"></script>
     <script>
         const dropbtn = document.getElementById("dropbtn");

@@ -7,9 +7,11 @@ $password = $_POST['password'];
 
 if (!$username) {
     echo json_encode(array("status" => "error", "msg" => "Please enter your username"));
-} elseif (!$password) {
+} else if (!preg_match('/^[a-zA-Z0-9.]+$/', $username)) {
+    echo json_encode(array("status" => "error", "msg" => "Please enter Username A-Z, a-z, or 0-9 only."));
+} else if (!$password) {
     echo json_encode(array("status" => "error", "msg" => "Please enter your password"));
-} elseif (strlen($_POST['password']) < 8) {
+} else if (strlen($_POST['password']) < 8) {
     echo json_encode(array("status" => "error", "msg" => "Please enter a password with more than 8 characters"));
 } else {
     try {

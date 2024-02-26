@@ -3,39 +3,6 @@
 session_start();
 require_once '../config/db.php';
 
-if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
-    if (isset($_POST['submit'])) {
-        $comment = $_POST['message']; // ดึงข้อมูลจาก textarea
-        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : $_SESSION['admin_id']; // ดึง user_id หรือ admin_id ขึ้นมา
-        $date = date("Y-m-d "); // วันที่ปัจจุบัน
-
-        if (empty($comment)) {
-            $_SESSION['warning'] = "Error adding comment.";
-            header("location: Comment.php");
-            exit;
-        } else {
-            // เพิ่มข้อมูลลงในฐานข้อมูล
-            $stmt = $conn->prepare("INSERT INTO table_comment (comment, date, userID) VALUES (:comment, :date, :userID)");
-            $stmt->bindParam(':comment', $comment);
-            $stmt->bindParam(':date', $date);
-            $stmt->bindParam(':userID', $userId);
-            $stmt->execute();
-
-            if ($stmt) {
-                $_SESSION['success'] = "Comment added successfully!";
-                header("location: Comment.php");
-                exit;
-            } else {
-                $_SESSION['error'] = "Error adding comment.";
-                header("location: Comment.php");
-                exit;
-            }
-        }
-    }
-} else {
-    header("location: ../index.php");
-    exit;
-}
 
 ?>
 
@@ -45,8 +12,9 @@ if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weapons-Gun</title>
-    <link rel="stylesheet" href="../public/css/Comment.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Edit Account</title>
+    <link rel="stylesheet" href="edit_profile.css">
     <link rel="icon" href="../public/img/logo.png " type="image/gif">
 </head>
 
@@ -131,51 +99,46 @@ if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
             <?php } ?>
         </div>
 
-
     </header>
 
-    <article>
-        <?php if (isset($_SESSION['success'])) { ?>
-            <?php
-            echo $_SESSION['success'];
-            unset($_SESSION['success']);
-            ?>
-        <?php } ?>
-        <?php if (isset($_SESSION['error'])) { ?>
-            <?php
-            echo $_SESSION['error'];
-            unset($_SESSION['error']);
-            ?>
-        <?php } ?>
-        <?php if (isset($_SESSION['warning'])) { ?>
-            <?php
-            echo $_SESSION['warning'];
-            unset($_SESSION['warning']);
-            ?>
-        <?php } ?>
+    <h1>Edit Account</h1>
 
-        <div class="sec-com">
-            <div class="info-person">
-                <?php
-                if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
-                ?>
-                    <img class="img-person" src="../public/img/te.jpg" alt="">
-                    <p class="name-person"><?= $row['firstName']; ?> <?= $row['lastName']; ?></p>
-                <?php
-                }
-                ?>
-            </div>
-            <form method="post" action="">
-                <textarea class="comment-box" placeholder="แสดงความคิดเห็น..." cols="70" rows="8" name="message"></textarea>
-                <div class="bt-box">
-                    <button class="bt-submit" type="submit" name="submit">Submit</button>
+    <article>
+        <form action="update_profile.php" method="post" id="editform">
+            <!-- เพิ่ม input hidden เพื่อส่งค่า userID -->
+            <input type="hidden" name="userID" value="<?= $row['userID'] ?>">
+            <div class="container">
+                <div class="box">
+                    <div class="profile_info">
+                        <p>Firstname :</p>
+                        <input type="text" class="form-control" value="<?= $row['firstName'] ?>" name="firstname" require>
+                    </div>
+                    <div class="profile_info">
+                        <p>Lastname :</p>
+                        <input type="text" class="form-control" value="<?= $row['lastName'] ?>" name="lastname" require>
+                    </div>
+                    <div class="profile_info">
+                        <p>E-mail :</p>
+                        <input type="email" class="form-control" value="<?= $row['email'] ?>" name="email" require>
+                    </div>
+                    <div class="profile_info">
+                        <p>Username :</p>
+                        <input type="text" class="form-control" value="<?= $row['username'] ?>" name="username" require>
+                    </div>
+                    <div class="edit-profile">
+                        <a class="btn btn-danger" href="profile_info.php">Go Back</a>
+                        <button type="submit" name="update" class="btn btn-warning">Update Account</button>
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </article>
 
     <footer-component></footer-component>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../footer/footer.js"></script>
     <script>
         const dropbtn = document.getElementById("dropbtn");
@@ -184,12 +147,39 @@ if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
         dropbtn.addEventListener("click", function() {
             if (dropdownContent.style.display === "block") {
                 dropdownContent.style.display = "none";
-                console.log("TEST");
             } else {
                 dropdownContent.style.display = "block";
-                console.log("Error");
             }
         });
+
+        $(document).ready(function() {
+            $("#editform").submit(function(e) {
+                e.preventDefault();
+
+                let formUrl = $(this).attr("action");
+                let reqMethod = $(this).attr("method");
+                let formData = new FormData(this);
+
+                $.ajax({
+                    url: formUrl,
+                    type: reqMethod,
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        let result = JSON.parse(data);
+                        if (result.status == "success") {
+                            Swal.fire("Success!", result.msg, "success").then(function() {
+                                window.location.href = "profile_info.php";
+                            });
+                        } else {
+                            console.log(result);
+                            Swal.fire("Error!", result.msg, "error");
+                        }
+                    }
+                })
+            })
+        })
     </script>
 </body>
 

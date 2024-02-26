@@ -150,75 +150,67 @@ header .login-btn button:hover {
 /*---------------------------------nav-----------------------------------------*/
 /*---------------------------------nav-----------------------------------------*/
 article{
-    height: 100vh;
+    min-height: 100vh;
 }
 
-.sec-com{
-    background-color: #ccc;
-    margin-top: 10rem;
+h1 {
+    margin-top: 5rem;
+    color: #fff;
+    font-weight: bold;
+    width: fit-content;
     margin-left: auto;
     margin-right: auto;
-    width: 600px;
-    padding: 2rem;
-    border-radius: 25px;
-    
 }
-.info-person{
+
+.container{
+    margin: 7rem auto;
+    background-color:#292727;
+    width: 700px;
+    min-height: 500px;
+    border-radius:30px ;
     display: flex;
-    justify-content: space-around;
-    margin-bottom: .7rem;
+    justify-content: center; /* จัดให้ .box อยู่ตรงกลาง */
+}
+
+
+.profile_info{
+    margin-top: 2rem;
+    padding: .5rem .5rem;
+    background-color: #323131;
+    display: flex;
+    width: 350px;
+    border-radius: 15px;
+    display: flex;
     align-items: center;
-    max-width: 400px;
-    height: 60px;
+    justify-content: center;
 }
 
-.info-person img{
-    width: 45px;
-    height: auto;
-    object-fit: contain;
-    border-radius: 50%;
-}
-
-.info-person p{
-    font-weight: 600;
-    font-size: 16px;
-    letter-spacing: .4px;
-}
-
-
-textarea{
-    padding-top: 10px;
-    padding-left: 10px;
-}
-
-
-.bt-box{
-    margin: 3rem 0 2rem 0;
-    display: flex;
-    justify-content: end;
-    width: 510px;
-
-}
-
-.bt-box .bt-submit{
-    width: 95px;
-    height: 45px;
-    border-radius: 10px;
-    text-transform: uppercase;
-    background-color: #EB9D0B;
-    border: none;
+.profile_info p{
+    padding-left: 5px;
     color: #fff;
-    letter-spacing: .8px;
-    font-weight: 700;
-    font-size: 13px;
-    cursor: pointer;
-    transition: .3s;
-
-        &:hover{
-            background-color: #f7b63f;
-        }
+    font-size: 16px;
+    font-weight: bold;
 }
 
+.profile_info input {
+    width: 70%;
+    background-color: #323131; /* ตั้งค่าสีพื้นหลังเริ่มต้น */
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s, border-bottom-color 0.3s; /* เพิ่ม transition เพื่อทำให้การเปลี่ยนแปลงเป็นอ่อนไหว */
+}
+
+.profile_info input:focus {
+    color: #fff;
+    background-color: #323131; /* เมื่อมีการ focus ให้เปลี่ยนเป็นสีดำ */
+    border-bottom: #fff solid 1px; /* เมื่อมีการ focus ให้เส้นขอบเป็นสีขาว */
+}
+
+.edit-profile {
+    position: absolute;
+    margin-top: 3rem;
+    margin-left: 16rem;
+}
 
 footer {
     background-color: aliceblue;

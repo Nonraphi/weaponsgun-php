@@ -3,7 +3,7 @@
 session_start();
 require_once '../config/db.php';
 
-if(isset($_SESSION['admin_id']) && isset($_SESSION['user_id'])){
+if(isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])){
     header("location: ../index.php");
     exit();
 }
