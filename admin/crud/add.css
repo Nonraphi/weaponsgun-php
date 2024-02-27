@@ -28,6 +28,10 @@ h1,label{
     display: inline-block;
 }
 
+.image-container img{
+    cursor: pointer;
+}
+
 /* Style for the pop-up */
 .modal {
     display: none;

@@ -3,36 +3,8 @@
 session_start();
 require_once '../config/db.php';
 
-if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
-    if (isset($_POST['submit'])) {
-        $comment = $_POST['message']; // ดึงข้อมูลจาก textarea
-        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : $_SESSION['admin_id']; // ดึง user_id หรือ admin_id ขึ้นมา
-        $date = date("Y-m-d "); // วันที่ปัจจุบัน
-
-        if (empty($comment)) {
-            $_SESSION['warning'] = "Error adding comment.";
-            header("location: Comment.php");
-            exit;
-        } else {
-            // เพิ่มข้อมูลลงในฐานข้อมูล
-            $stmt = $conn->prepare("INSERT INTO table_comment (comment, date, userID) VALUES (:comment, :date, :userID)");
-            $stmt->bindParam(':comment', $comment);
-            $stmt->bindParam(':date', $date);
-            $stmt->bindParam(':userID', $userId);
-            $stmt->execute();
-
-            if ($stmt) {
-                $_SESSION['success'] = "Comment added successfully!";
-                header("location: Comment.php");
-                exit;
-            } else {
-                $_SESSION['error'] = "Error adding comment.";
-                header("location: Comment.php");
-                exit;
-            }
-        }
-    }
-} else {
+if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {}
+else{
     header("location: ../index.php");
     exit;
 }
@@ -135,24 +107,6 @@ if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
     </header>
 
     <article>
-        <?php if (isset($_SESSION['success'])) { ?>
-            <?php
-            echo $_SESSION['success'];
-            unset($_SESSION['success']);
-            ?>
-        <?php } ?>
-        <?php if (isset($_SESSION['error'])) { ?>
-            <?php
-            echo $_SESSION['error'];
-            unset($_SESSION['error']);
-            ?>
-        <?php } ?>
-        <?php if (isset($_SESSION['warning'])) { ?>
-            <?php
-            echo $_SESSION['warning'];
-            unset($_SESSION['warning']);
-            ?>
-        <?php } ?>
 
         <div class="sec-com">
             <div class="info-person">
@@ -165,7 +119,7 @@ if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
                 }
                 ?>
             </div>
-            <form method="post" action="">
+            <form method="post" action="insert_comment.php" id="comment">
                 <textarea class="comment-box" placeholder="แสดงความคิดเห็น..." cols="70" rows="8" name="message"></textarea>
                 <div class="bt-box">
                     <button class="bt-submit" type="submit" name="submit">Submit</button>
@@ -177,6 +131,8 @@ if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
     <footer-component></footer-component>
 
     <script src="../footer/footer.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const dropbtn = document.getElementById("dropbtn");
         const dropdownContent = document.getElementById("dropdown-content");
@@ -190,6 +146,35 @@ if (isset($_SESSION['admin_id']) || isset($_SESSION['user_id'])) {
                 console.log("Error");
             }
         });
+
+        $(document).ready(function() {
+            $("#comment").submit(function(e) {
+                e.preventDefault();
+
+                let formUrl = $(this).attr("action");
+                let reqMethod = $(this).attr("method");
+                let formData = new FormData(this);
+
+                $.ajax({
+                    url: formUrl,
+                    type: reqMethod,
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        let result = JSON.parse(data);
+                        if (result.status == "success") {
+                            Swal.fire("Success!", result.msg, "success").then(function() {
+                                window.location.reload();
+                            });
+                        } else {
+                            console.log(result);
+                            Swal.fire("Error!", result.msg, "error");
+                        }
+                    }
+                })
+            })
+        })
     </script>
 </body>
 
